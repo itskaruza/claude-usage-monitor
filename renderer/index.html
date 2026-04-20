@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Usage Monitor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Custom Title Bar -->
+  <div class="title-bar">
+    <span class="title-text">Claude Usage</span>
+    <div class="title-buttons">
+      <button class="title-btn sync-btn" id="syncBtn" title="Sync from Claude">&#8635;</button>
+      <button class="title-btn minimize-btn" id="minimizeBtn">&minus;</button>
+      <button class="title-btn close-btn" id="closeBtn">&times;</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Session Section -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label">Session</span>
+        <span class="pct-display" data-field="session">
+          <span class="pct-value" id="sessionPct">0</span><span class="pct-sign">%</span>
+        </span>
+      </div>
+      <div class="bar-container simple">
+        <div class="bar-fill" id="sessionBar"></div>
+      </div>
+      <div class="section-sub">
+        <span class="reset-info" id="sessionReset">Resets in --</span>
+        <span class="edit-hint">(click % to edit)</span>
+      </div>
+    </div>
+
+    <!-- All Models Section -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label">All Models</span>
+        <span class="pct-display" data-field="allModels">
+          <span class="pct-value" id="allModelsPct">0</span><span class="pct-sign">%</span>
+        </span>
+      </div>
+      <div class="bar-container segmented">
+        <div class="bar-fill" id="allModelsBar"></div>
+        <div class="bar-dividers" id="allModelsDividers"></div>
+        <div class="budget-marker" id="allModelsBudget"></div>
+      </div>
+      <div class="day-labels" id="allModelsDays"></div>
+      <div class="section-sub">
+        <span class="status-indicator" id="allModelsStatus"></span>
+        <span class="reset-info" id="allModelsReset">Resets —</span>
+      </div>
+    </div>
+
+    <!-- Sonnet Only Section -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-label">Sonnet Only</span>
+        <span class="pct-display" data-field="sonnetOnly">
+          <span class="pct-value" id="sonnetOnlyPct">0</span><span class="pct-sign">%</span>
+        </span>
+      </div>
+      <div class="bar-container segmented">
+        <div class="bar-fill" id="sonnetOnlyBar"></div>
+        <div class="bar-dividers" id="sonnetOnlyDividers"></div>
+        <div class="budget-marker" id="sonnetOnlyBudget"></div>
+      </div>
+      <div class="day-labels" id="sonnetOnlyDays"></div>
+      <div class="section-sub">
+        <span class="status-indicator" id="sonnetOnlyStatus"></span>
+        <span class="reset-info" id="sonnetOnlyReset">Resets —</span>
+      </div>
+    </div>
+
+    <input type="hidden" id="sessionHours">
+    <input type="hidden" id="sessionMinutes">
+    <div class="last-updated" id="lastUpdated">Last updated: --</div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

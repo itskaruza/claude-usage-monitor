@@ -1,0 +1,58 @@
+{
+  "name": "claude-usage-monitor",
+  "version": "1.0.0",
+  "description": "Desktop widget to monitor Claude AI usage limits with daily budget tracking",
+  "main": "main.js",
+  "author": "itskaruza",
+  "scripts": {
+    "start": "electron .",
+    "build-icon": "node build-icon.js",
+    "dist": "electron-builder --win nsis",
+    "publish": "electron-builder --win nsis --publish always"
+  },
+  "build": {
+    "appId": "com.peka.claude-usage-monitor",
+    "productName": "Claude Usage Monitor",
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**",
+      "!build-icon.js",
+      "!build/*.png"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] }
+      ],
+      "icon": "build/icon.ico",
+      "signingHashAlgorithms": null,
+      "sign": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Claude Usage Monitor",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "itskaruza",
+      "repo": "claude-usage-monitor"
+    }
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
+    "png-to-ico": "^3.0.1"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  }
+}
