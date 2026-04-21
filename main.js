@@ -60,32 +60,28 @@ function saveUsage(data) {
   }
 }
 
+const APP_ICON_PATH = path.join(__dirname, 'build', 'icon.ico');
+
 function createTrayIcon() {
-  // Create a simple 16x16 colored icon programmatically
-  const size = 16;
-  const canvas = Buffer.alloc(size * size * 4);
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const i = (y * size + x) * 4;
-      const cx = x - size / 2 + 0.5;
-      const cy = y - size / 2 + 0.5;
-      const dist = Math.sqrt(cx * cx + cy * cy);
-      if (dist <= size / 2 - 1) {
-        canvas[i] = 0xd4;     // R
-        canvas[i + 1] = 0xa5; // G
-        canvas[i + 2] = 0x74; // B
-        canvas[i + 3] = 255;  // A
-      } else if (dist <= size / 2) {
-        canvas[i] = 0x90;
-        canvas[i + 1] = 0x70;
-        canvas[i + 2] = 0x50;
-        canvas[i + 3] = 180;
-      } else {
-        canvas[i + 3] = 0;
+  // Use the proper app icon (amber circle with usage bars) for the tray
+  const img = nativeImage.createFromPath(APP_ICON_PATH);
+  if (img.isEmpty()) {
+    // Fallback if icon can't be loaded: plain amber circle
+    const size = 16;
+    const buf = Buffer.alloc(size * size * 4);
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        const i = (y * size + x) * 4;
+        const cx = x - size / 2 + 0.5, cy = y - size / 2 + 0.5;
+        const dist = Math.sqrt(cx * cx + cy * cy);
+        if (dist <= size / 2 - 1) {
+          buf[i] = 0xd4; buf[i+1] = 0xa5; buf[i+2] = 0x74; buf[i+3] = 255;
+        } else { buf[i+3] = 0; }
       }
     }
+    return nativeImage.createFromBuffer(buf, { width: size, height: size });
   }
-  return nativeImage.createFromBuffer(canvas, { width: size, height: size });
+  return img.resize({ width: 16, height: 16 });
 }
 
 function createWindow() {
@@ -98,6 +94,7 @@ function createWindow() {
     skipTaskbar: false,
     transparent: false,
     backgroundColor: '#1a1a2e',
+    icon: APP_ICON_PATH,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,

@@ -1,6 +1,6 @@
 {
   "name": "claude-usage-monitor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Desktop widget to monitor Claude AI usage limits with daily budget tracking",
   "main": "main.js",
   "author": "itskaruza",
@@ -17,6 +17,7 @@
       "main.js",
       "preload.js",
       "renderer/**",
+      "build/icon.ico",
       "!build-icon.js",
       "!build/*.png"
     ],
